@@ -4,6 +4,8 @@ import course.academy.dao.BookRepository;
 import course.academy.model.Book;
 
 public class BookRepositoryMemoryImpl implements BookRepository {
+    private Book[] books;
+
     @Override
     public Book[] findAll() {
         return new Book[0];
