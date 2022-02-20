@@ -133,33 +133,4 @@ public class Book {
         return getId();
     }
 
-    public static void main(String[] args) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        Book[] books = new Book[]{
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
-                        "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
-                        "Addison-Wesley Professional", 35.5, "In depth Java book."),
-                new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
-                        "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
-                        "Addison-Wesley Professional", 35.5, "In depth Java book."),
-                new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
-                        "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
-                        "Addison-Wesley Professional", 35.5, "In depth Java book."),
-                new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85)
-        };
-        Book[] books2 = new Book[MAX_BOOKS];
-
-        int n = 0;
-        while (n < books.length && books[n] != null) {
-            System.out.println(books[n++]);
-        }
-    }
 }

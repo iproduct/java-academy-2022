@@ -1,5 +1,6 @@
 package course.academy.dao;
 
+import course.academy.dao.exception.InvalidRepositoryStateException;
 import course.academy.model.Book;
 
 /**
@@ -18,7 +19,7 @@ public interface BookRepository {
      * @return the book with given id, or null if id not found in repository
      */
     Book findById(int id);
-    Book create(Book book);
+    Book create(Book book) throws InvalidRepositoryStateException;
     Book update(Book book);
     Book deleteById(int id);
     int count();
