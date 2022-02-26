@@ -1,16 +1,11 @@
 package course.academy.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Random;
 
-public class Book {
+public class Book implements Comparable<Book> {
     public static final int MAX_BOOKS = 10;
     private static int nextId = 0;
-//    static {
+    //    static {
 //        Random random = new Random();
 //        nextId = random.nextInt(1000);
 //    }
@@ -25,6 +20,10 @@ public class Book {
     // Overloaded constructors
     // No args constructor
     public Book() {
+    }
+
+    public Book(int id) {
+        this.id = id;
     }
 
     // Required args constructor
@@ -133,4 +132,8 @@ public class Book {
         return getId();
     }
 
+    @Override
+    public int compareTo(Book other) {
+        return Integer.compare(getId(), other.getId());
+    }
 }

@@ -19,12 +19,14 @@ public class BookRepositoryMemoryImpl implements BookRepository {
 
     @Override
     public Book findById(int id) {
-        return null;
+        int index = findIndexById(id);
+        if(index < 0) return null;
+        return books[index];
     }
 
     @Override
     public Book create(Book book) throws InvalidRepositoryStateException {
-        if(len < books.length){
+        if(len < MAX_BOOKS){
             book.setId(++nextId);
             books[len] = book;
             len++;
@@ -37,16 +39,44 @@ public class BookRepositoryMemoryImpl implements BookRepository {
 
     @Override
     public Book update(Book book) {
-        return null;
+        int index = findIndexById(book.getId());
+        if(index < 0) {
+            return null;
+        }
+        books[index] = book;
+        return book;
     }
 
     @Override
     public Book deleteById(int id) {
-        return null;
+        int index = findIndexById(id);
+        if(index < 0) {
+            return null;
+        }
+        Book removed = books[index];
+        for(;index < len-1; index ++) {
+            books[index] = books[index + 1];
+        }
+        len --;
+        return removed;
     }
 
     @Override
     public int count() {
-        return 0;
+        return len;
+    }
+
+    private int findIndexById(int id){
+        return Arrays.binarySearch(books, new Book(id));
     }
 }
+
+
+
+
+
+
+
+
+
+
