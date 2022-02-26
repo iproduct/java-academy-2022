@@ -134,6 +134,7 @@ public class Book implements Comparable<Book> {
 
     @Override
     public int compareTo(Book other) {
-        return Integer.compare(getId(), other.getId());
+        return getId() < other.getId() ? -1 : getId() == other.getId() ? 0 : 1;
+//        return Integer.compare(getId(), other.getId());
     }
 }
