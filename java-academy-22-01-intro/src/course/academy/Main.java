@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
-        BookRepository bookRepository = new BookRepositoryMemoryImpl();
+        BookRepository bookRepository = new BookRepositoryMemoryImpl(3);
         for(Book book : MockBooks.MOCK_BOOKS){
             try {
                 bookRepository.create(book);
@@ -21,14 +21,20 @@ public class Main {
             }
         }
 
+        // delete books 2 and 4
         bookRepository.deleteById(2);
         bookRepository.deleteById(4);
+        // print books
         for(Book book : bookRepository.findAll()) {
             System.out.println(book);
         }
         System.out.println();
+
+        // find book by id
         Book thirdBook = bookRepository.findById(3);
         System.out.println(thirdBook);
+
+        // find by id already deleted boook
         System.out.println(bookRepository.findById(4));
 
         // update thirdBook

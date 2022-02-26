@@ -7,10 +7,18 @@ import course.academy.model.Book;
 import java.util.Arrays;
 
 public class BookRepositoryMemoryImpl implements BookRepository {
-    public static final int MAX_BOOKS = 5;
+    public static final int INITIAL_CAPACITY = 8;
     private static int nextId = 0;
-    private Book[] books = new Book[MAX_BOOKS];
+    private Book[] books;
     private int len = 0;
+
+    public BookRepositoryMemoryImpl() {
+        books = new Book[INITIAL_CAPACITY];
+    }
+
+    public BookRepositoryMemoryImpl(int initialCapacity) {
+        books = new Book[initialCapacity];
+    }
 
     @Override
     public Book[] findAll() {
@@ -20,21 +28,21 @@ public class BookRepositoryMemoryImpl implements BookRepository {
     @Override
     public Book findById(int id) {
         int index = findIndexById(id);
-        if(index < 0) return null;
+        if (index < 0) return null;
         return books[index];
     }
 
     @Override
     public Book create(Book book) throws InvalidRepositoryStateException {
-        if(len < MAX_BOOKS){
-            book.setId(++nextId);
-            books[len] = book;
-            len++;
-            return book;
-        } else {
-            throw new InvalidRepositoryStateException(
-                    "Repository full (capacity=" + books.length + ")");
+        if (len >= books.length) {
+            resizeRepository();
+//            throw new InvalidRepositoryStateException(
+//                    "Repository full (capacity=" + books.length + ")");
         }
+        book.setId(++nextId);
+        books[len] = book;
+        len++;
+        return book;
     }
 
     @Override
@@ -66,8 +74,13 @@ public class BookRepositoryMemoryImpl implements BookRepository {
         return len;
     }
 
-    private int findIndexById(int id){
+    private int findIndexById(int id) {
         return Arrays.binarySearch(books, new Book(id));
+    }
+
+    private void resizeRepository() {
+        books = Arrays.copyOf(books, 2 * books.length);
+        System.out.println("Repository buffer resized. New size: " + books.length);
     }
 }
 
