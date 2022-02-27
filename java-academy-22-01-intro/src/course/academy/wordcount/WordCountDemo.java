@@ -31,4 +31,8 @@ public class WordCountDemo {
             +"Oracle (and others) highly recommend uninstalling outdated and unsupported versions of Java, " +
             "due to unresolved security issues in older versions.[22] Oracle advises its users to " +
             "immediately transition to a supported version, such as one of the LTS versions (8, 11, 17).\n";
+
+    public static WordCount[] indexText(String text, int maxCount){
+
+    }
 }
