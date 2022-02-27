@@ -3,7 +3,7 @@ package course.academy.wordcount;
 import java.util.Arrays;
 
 public class WordCountDemo {
-    public static final String WORD_SPLITTING_PATTERN = "-?[\\s.!?:;\\'\\\"{},\\[\\]\\d()+–]+-?";
+    public static final String WORD_SPLITTING_PATTERN = "-?[\\s.!?:;\\\"{},\\[\\]\\d()+–]+-?";
     public static final String SAMPLE_TEXT = "Java is a high-level, class-based, " +
             "object-oriented programming language that is designed to have as few implementation " +
             "dependencies as possible. It is a general-purpose programming language intended to let " +
@@ -53,6 +53,7 @@ public class WordCountDemo {
             "after", "before", "most", "off", "mustn", "won't"};
     public static WordCount[] indexText(String text, int maxCount){
         String[] words = text.split(WORD_SPLITTING_PATTERN);
+        // TODO filter out stop words
         System.out.println(Arrays.toString(words));
         return new WordCount[0];
     }
