@@ -1,6 +1,9 @@
 package course.academy.wordcount;
 
+import java.util.Arrays;
+
 public class WordCountDemo {
+    public static final String WORD_SPLITTING_PATTERN = "-?[\\s.!?:;\\'\\\"{},\\[\\]\\d()+–]+-?";
     public static final String SAMPLE_TEXT = "Java is a high-level, class-based, " +
             "object-oriented programming language that is designed to have as few implementation " +
             "dependencies as possible. It is a general-purpose programming language intended to let " +
@@ -12,7 +15,7 @@ public class WordCountDemo {
             "runtime provides dynamic capabilities (such as reflection and runtime code modification) " +
             "that are typically not available in traditional compiled languages. As of 2019, " +
             "Java was one of the most popular programming languages in use according to GitHub,[19][20] " +
-            "particularly for client–server web applications, with a reported 9 million developers.[21]/n" +
+            "particularly for client–server web applications, with a reported 9 million developers.[21]\n" +
             "Java was originally developed by James Gosling at Sun Microsystems and released in May 1995 " +
             "as a core component of Sun Microsystems' Java platform. The original and reference " +
             "implementation Java compilers, virtual machines, and class libraries were originally " +
@@ -33,6 +36,14 @@ public class WordCountDemo {
             "immediately transition to a supported version, such as one of the LTS versions (8, 11, 17).\n";
 
     public static WordCount[] indexText(String text, int maxCount){
+        String[] words = text.split(WORD_SPLITTING_PATTERN);
+        System.out.println(Arrays.toString(words));
+        return new WordCount[0];
+    }
 
+    public static void main(String[] args) {
+        for(WordCount wc : indexText(SAMPLE_TEXT, 20)){
+            System.out.println(wc);
+        }
     }
 }
