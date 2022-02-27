@@ -2,6 +2,8 @@ package course.academy.wordcount;
 
 import java.util.Arrays;
 
+import static java.lang.Math.min;
+
 public class WordCountDemo {
     public static final String WORD_SPLITTING_PATTERN = "-?[\\s.!?:;\\\"{},\\[\\]\\d()+–]+-?";
     public static final String SAMPLE_TEXT = "Java is a high-level, class-based, " +
@@ -69,8 +71,10 @@ public class WordCountDemo {
                 size = insert(wordCounts, size, new WordCount(word, 1), -index-1);
             }
         }
-        System.out.println(Arrays.toString(wordCounts));
-        return new WordCount[0];
+        Arrays.sort(wordCounts, 0, size, new WordCountCountComparator().reversed());
+        wordCounts = Arrays.copyOfRange(wordCounts, 0, min(maxCount, size));
+//        System.out.println(Arrays.toString(wordCounts));
+        return wordCounts;
     }
 
     /**
