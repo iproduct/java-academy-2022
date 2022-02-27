@@ -53,9 +53,40 @@ public class WordCountDemo {
             "after", "before", "most", "off", "mustn", "won't"};
     public static WordCount[] indexText(String text, int maxCount){
         String[] words = text.split(WORD_SPLITTING_PATTERN);
-        // TODO filter out stop words
-        System.out.println(Arrays.toString(words));
+        Arrays.sort(STOP_WORDS); // O(N)
+        WordCount[] wordCounts = new WordCount[words.length];
+        int size = 0;
+        for(String word : words) { //O(N)
+            word = word.trim().toLowerCase();
+            if(word.length() < 3 || Arrays.binarySearch(STOP_WORDS, word) >= 0) { // O(log(N))
+                continue;
+            }
+            int index = Arrays.binarySearch(wordCounts,0, size, new WordCount(word, 0));
+            if(index >= 0) { //word found
+                WordCount element = wordCounts[index];
+                element.setCount(element.getCount() + 1);
+            } else {
+                size = insert(wordCounts, size, new WordCount(word, 1), -index-1);
+            }
+        }
+        System.out.println(Arrays.toString(wordCounts));
         return new WordCount[0];
+    }
+
+    /**
+     * Inserts element into array in given index and returns new array size
+     * @param wordCounts given array
+     * @param size the length of valid data in array
+     * @param inserted element to inser in given position into array
+     * @param insertIndex the position we want to insert the new element
+     * @return the new array size (length of valid data in array)
+     */
+    public static int insert(WordCount[] wordCounts, int size, WordCount inserted, int insertIndex){
+        for(int i = size; insertIndex < i; i--) {
+            wordCounts[i] = wordCounts[i-1];
+        }
+        wordCounts[insertIndex] = inserted;
+        return size + 1;
     }
 
     public static void main(String[] args) {
