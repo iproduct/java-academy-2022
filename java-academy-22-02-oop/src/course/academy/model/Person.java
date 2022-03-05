@@ -3,12 +3,14 @@ package course.academy.model;
 import java.util.StringJoiner;
 
 public class Person {
-    private Long id;
+    private static long nextId = 0;
+    private final Long id; // blank final
     private String firstName;
     private String lastName;
     private int age;
 
     public Person() {
+        id = ++nextId;
     }
 
     public Person(Long id) {
@@ -16,6 +18,7 @@ public class Person {
     }
 
     public Person(String firstName, String lastName, int age) {
+        id = ++nextId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -30,10 +33,6 @@ public class Person {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -85,7 +84,8 @@ public class Person {
                 .toString();
     }
 
-    protected String format(String prefix) {
+    public String format(final String prefix) {
+//        prefix = prefix.toUpperCase();
         return String.format("%s| %4d | %-12.12s | %-12.12s | %3d |",
                 prefix, id, firstName, lastName, age);
     }

@@ -1,9 +1,9 @@
 package course.academy.model;
 
-import java.util.Date;
+import java.util.List;
 import java.util.StringJoiner;
 
-import static course.academy.model.Role.*;
+import static course.academy.model.Role.READER;
 
 public class User extends Person {
     private String username;
@@ -88,13 +88,24 @@ public class User extends Person {
                 super.format(prefix), username, password, role.name(), active);
     }
 
+    private static String stringifyUsers(List<User> users) {
+        StringJoiner stringJoiner = new StringJoiner("\n", "Users:\n", "");
+        for(User u : users) {
+            stringJoiner.add(u.toString());
+        }
+        return stringJoiner.toString();
+    }
+
     public static void main(String[] args) {
-        var u1 = new User(1L, "John", "Doe", 35,
-                "john", "john123", ADMIN, true);
-        var u2 = new User(2L, "Ivan", "Petrov", 25,
-                "ivan", "ivan123", AUTHOR, true);
-        System.out.println(u1.format("User "));
-        System.out.println(u2.format("User "));
+        List<User> users = List.of(
+                new Admin(1L, "John", "Doe", 35,
+                        "john", "john123", "admin@mydomain.com"),
+                new Author(2L, "Ivan", "Petrov", 25,
+                        "ivan", "ivan123", List.of("Java", "Kotlin")),
+                new Reader(3L, "Maria", "Petrova", 25,
+                        "mary", "mary123", List.of("Java", "SOLID Principles"))
+                );
+        System.out.println(stringifyUsers(users));
     }
 
 }
