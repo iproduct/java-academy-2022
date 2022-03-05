@@ -1,9 +1,9 @@
 package course.academy.model;
 
+import java.util.Date;
 import java.util.StringJoiner;
 
-import static course.academy.model.Role.ADMIN;
-import static course.academy.model.Role.READER;
+import static course.academy.model.Role.*;
 
 public class User extends Person {
     private String username;
@@ -82,9 +82,19 @@ public class User extends Person {
                 .toString();
     }
 
+    @Override
+    public String format(String prefix){
+        return String.format("%s %-15.15s | %-15.15s | %-6.6s | %5.5b |",
+                super.format(prefix), username, password, role.name(), active);
+    }
+
     public static void main(String[] args) {
         var u1 = new User(1L, "John", "Doe", 35,
                 "john", "john123", ADMIN, true);
-        System.out.println(u1);
+        var u2 = new User(2L, "Ivan", "Petrov", 25,
+                "ivan", "ivan123", AUTHOR, true);
+        System.out.println(u1.format("User "));
+        System.out.println(u2.format("User "));
     }
+
 }

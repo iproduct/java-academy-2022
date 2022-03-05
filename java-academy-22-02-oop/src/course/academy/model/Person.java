@@ -85,9 +85,16 @@ public class Person {
                 .toString();
     }
 
+    protected String format(String prefix) {
+        return String.format("%s| %4d | %-12.12s | %-12.12s | %3d |",
+                prefix, id, firstName, lastName, age);
+    }
+
     public static void main(String[] args) {
         var p1 = new Person(1L, "John", "Doe", 35);
-        System.out.println(p1);
+        var p2 = new Person(2L, "Ivan", "Petrov", 28);
+        System.out.println(p1.format("Person "));
+        System.out.println(p2.format("Person "));
     }
 }
 
