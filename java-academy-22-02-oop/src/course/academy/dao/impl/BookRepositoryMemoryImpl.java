@@ -1,7 +1,7 @@
 package course.academy.dao.impl;
 
 import course.academy.dao.BookRepository;
-import course.academy.dao.exception.NonexistingEntityException;
+import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
 
 import java.util.*;

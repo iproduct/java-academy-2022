@@ -1,6 +1,6 @@
 package course.academy.dao;
 
-import course.academy.dao.exception.NonexistingEntityException;
+import course.academy.exception.NonexistingEntityException;
 
 import java.util.Collection;
 

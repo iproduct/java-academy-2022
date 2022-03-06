@@ -1,4 +1,4 @@
-package course.academy.dao.exception;
+package course.academy.exception;
 
 public class NonexistingEntityException extends Exception{
     public NonexistingEntityException() {
