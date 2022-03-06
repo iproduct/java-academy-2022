@@ -1,9 +1,8 @@
 package course.academy.dao;
 
-import course.academy.dao.exception.InvalidRepositoryStateException;
-import course.academy.model.User;
+import course.academy.dao.exception.NonexistingEntityException;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Public interface for managing lifecycle of entity objects
@@ -13,7 +12,7 @@ public interface Repository<K, V extends Identifiable<K>> {
      * Find all users in repository
      * @return array of all users
      */
-    List<V> findAll();
+    Collection<V> findAll();
 
     /**
      * Find user by id
@@ -21,8 +20,8 @@ public interface Repository<K, V extends Identifiable<K>> {
      * @return the user with given id, or null if id not found in repository
      */
     V findById(K id);
-    V create(V entity) throws InvalidRepositoryStateException;
-    V update(V entity);
-    V deleteById(K id);
+    V create(V entity);
+    V update(V entity) throws NonexistingEntityException;
+    V deleteById(K id) throws NonexistingEntityException;
     long count();
 }

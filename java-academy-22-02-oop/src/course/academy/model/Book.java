@@ -120,17 +120,17 @@ public class Book implements Comparable<Book>, Identifiable<Long> {
 
         Book book = (Book) o;
 
-        return getId() == book.getId();
+        return getId() != null ? getId().equals(book.getId()) : book.getId() == null;
     }
 
     @Override
     public int hashCode() {
-        return getId();
+        return getId() != null ? getId().hashCode() : 0;
     }
 
     @Override
     public int compareTo(Book other) {
         return getId() < other.getId() ? -1 : getId() == other.getId() ? 0 : 1;
-//        return Integer.compare(getId(), other.getId());
+//        return Long.compare(getId(), other.getId());
     }
 }

@@ -1,6 +1,5 @@
 package course.academy.dao;
 
-import course.academy.dao.exception.InvalidRepositoryStateException;
 import course.academy.model.User;
 
 /**
