@@ -1,4 +1,4 @@
-package course.academy;
+package course.academy.dao;
 
 import course.academy.dao.BookRepository;
 import course.academy.dao.UserRepository;
