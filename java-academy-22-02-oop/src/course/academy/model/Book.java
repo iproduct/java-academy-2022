@@ -1,15 +1,11 @@
 package course.academy.model;
 
+import course.academy.dao.Identifiable;
+
 import java.time.LocalDate;
 
-public class Book implements Comparable<Book> {
-    public static final int MAX_BOOKS = 10;
-    private static int nextId = 0;
-    //    static {
-//        Random random = new Random();
-//        nextId = random.nextInt(1000);
-//    }
-    private int id = ++nextId;
+public class Book implements Comparable<Book>, Identifiable<Long> {
+    private Long id;
     private String title;
     private String author;
     private LocalDate publishingDate;
@@ -22,7 +18,7 @@ public class Book implements Comparable<Book> {
     public Book() {
     }
 
-    public Book(int id) {
+    public Book(Long id) {
         this.id = id;
     }
 
@@ -40,11 +36,11 @@ public class Book implements Comparable<Book> {
         this.description = description;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

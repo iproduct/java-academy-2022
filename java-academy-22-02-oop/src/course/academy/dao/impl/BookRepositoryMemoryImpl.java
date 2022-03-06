@@ -6,9 +6,9 @@ import course.academy.model.Book;
 
 import java.util.Arrays;
 
-public class BookRepositoryMemoryImpl implements BookRepository {
+class BookRepositoryMemoryImpl implements BookRepository {
     public static final int INITIAL_CAPACITY = 8;
-    private static int nextId = 0;
+    private static long nextId = 0;
     private Book[] books;
     private int len = 0;
 
@@ -26,7 +26,7 @@ public class BookRepositoryMemoryImpl implements BookRepository {
     }
 
     @Override
-    public Book findById(int id) {
+    public Book findById(Long id) {
         int index = findIndexById(id);
         if (index < 0) return null;
         return books[index];
@@ -74,7 +74,7 @@ public class BookRepositoryMemoryImpl implements BookRepository {
         return len;
     }
 
-    private int findIndexById(int id) {
+    private int findIndexById(Long id) {
         return Arrays.binarySearch(books, new Book(id));
     }
 

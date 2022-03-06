@@ -1,5 +1,7 @@
 package course.academy.model;
 
+import course.academy.dao.Identifiable;
+
 import java.util.List;
 import java.util.StringJoiner;
 

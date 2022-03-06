@@ -18,9 +18,9 @@ public interface BookRepository {
      * @param id the book id
      * @return the book with given id, or null if id not found in repository
      */
-    Book findById(int id);
+    Book findById(Long id);
     Book create(Book book) throws InvalidRepositoryStateException;
     Book update(Book book);
-    Book deleteById(int id);
+    Book deleteById(Long id);
     int count();
 }
