@@ -1,6 +1,8 @@
 package course.academy.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Menu {
     public static class Option {
@@ -35,19 +37,24 @@ public class Menu {
     public class ExitCommand implements Command {
         @Override
         public String execute() {
-            return null;
+            return String.format("Exiting menu '%s'.", Menu.this.title);
         }
     }
 
+    // Main class methods and attributes.
     private String title;
     private List<Option> options = List.of(new Option("Exit", new ExitCommand()));
+    private Scanner scanner = new Scanner(System.in);
 
     public Menu() {
     }
 
     public Menu(String title, List<Option> options) {
         this.title = title;
-        this.options = options;
+        var oldOptions= this.options;
+        this.options = new ArrayList<>();
+        this.options.addAll(options);
+        this.options.addAll(oldOptions);
     }
 
     public String getTitle() {
@@ -93,29 +100,26 @@ public class Menu {
     }
 
     public void show() {
-        System.out.printf("MENU: %s%n", title);
-        for (int i = 0; i < options.size(); i++) {
-            System.out.printf("%2d. %s%n", i + 1, options.get(i).getText());
+        while(true) {
+            System.out.printf("\nMENU: %s%n", title);
+            for (int i = 0; i < options.size(); i++) {
+                System.out.printf("%2d. %s%n", i + 1, options.get(i).getText());
+            }
+            int choice = -1;
+            do {
+                System.out.printf("Enter your choice (1 - %s):", options.size());
+                var choiceStr = scanner.nextLine();
+                try {
+                    choice = Integer.parseInt(choiceStr);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Error: Invalid choice. Please enter a valid number between 1 and " + options.size());
+                }
+            } while (choice < 1 || choice > options.size());
+            var result = options.get(choice - 1).getCommand().execute();
+            System.out.println(result);
+            if(choice == options.size()) { // Exit command chosen
+                break;
+            }
         }
-    }
-
-    public static void main(String[] args) {
-        var menu = new Menu("Main Menu", List.of(
-                new Option("Load Books", new Command() {
-                    @Override
-                    public String execute() {
-                        System.out.println("Loading books ...");
-                        return "Books loaded successfully.";
-                    }
-                }),
-                new Option("Save Books", new Command() {
-                    @Override
-                    public String execute() {
-                        System.out.println("Saving books ...");
-                        return "Books saved successfully.";
-                    }
-                })
-        ));
-        menu.show();
     }
 }

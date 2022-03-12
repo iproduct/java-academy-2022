@@ -9,9 +9,11 @@ import course.academy.model.Book;
 import course.academy.model.MockBooks;
 import course.academy.service.BookService;
 import course.academy.service.impl.BookServiceImpl;
+import course.academy.view.Menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws NonexistingEntityException {
@@ -64,5 +66,24 @@ public class Main {
         bookService.updateBook(thirdBook);
         System.out.println(bookService.getBookById(3L));
         System.out.println("Program finished normally.");
+
+        // Create and show main menu
+        var menu = new Menu("Main Menu", List.of(
+                new Menu.Option("Load Books", new Menu.Command() {
+                    @Override
+                    public String execute() {
+                        System.out.println("Loading books ...");
+                        return "Books loaded successfully.";
+                    }
+                }),
+                new Menu.Option("Save Books", new Menu.Command() {
+                    @Override
+                    public String execute() {
+                        System.out.println("Saving books ...");
+                        return "Books saved successfully.";
+                    }
+                })
+        ));
+        menu.show();
     }
 }
