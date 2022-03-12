@@ -9,7 +9,17 @@ import java.util.Collection;
  */
 public interface Repository<K, V extends Identifiable<K>> {
 
+    interface IdGenerator<K> {
+        K getNextId();
+    }
 
+    class LongIdGenerator implements IdGenerator<Long>{
+        private long lastId = 0;
+        @Override
+        public Long getNextId() {
+            return ++ lastId;
+        }
+    }
 
     /**
      * Find all users in repository

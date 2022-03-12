@@ -9,8 +9,8 @@ import course.academy.model.Book;
 import java.util.*;
 
 public abstract class AbstractPersistableBookRepository implements BookRepository, Persistable {
-    private static long nextId = 0;
     private Map<Long, Book> books = new HashMap<>(); // O(1) find by ID
+    private IdGenerator<Long> idGenerator = new LongIdGenerator();
 
     @Override
     public Collection<Book> findAll() {
@@ -24,7 +24,7 @@ public abstract class AbstractPersistableBookRepository implements BookRepositor
 
     @Override
     public Book create(Book book) {
-        book.setId(++nextId);
+        book.setId(idGenerator.getNextId());
         books.put(book.getId(), book);
         return book;
     }
