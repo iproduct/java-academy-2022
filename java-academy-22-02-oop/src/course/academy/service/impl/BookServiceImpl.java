@@ -55,7 +55,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book deleteBookById(Long id) throws NonexistingEntityException {
         return bookRepo.deleteById(id);
-
     }
 
     @Override

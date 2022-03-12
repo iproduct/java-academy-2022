@@ -39,7 +39,7 @@ public class Main {
 
         // delete books 2 and 4
         bookService.deleteBookById(2L);
-        bookService.deleteBookById(4L);
+//        bookService.deleteBookById(4L);
         // print books
         for(Book book : bookService.getAllBooks()) {
             System.out.println(book);
