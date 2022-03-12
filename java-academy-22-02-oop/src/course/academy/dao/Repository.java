@@ -8,6 +8,9 @@ import java.util.Collection;
  * Public interface for managing lifecycle of entity objects
  */
 public interface Repository<K, V extends Identifiable<K>> {
+
+
+
     /**
      * Find all users in repository
      * @return array of all users

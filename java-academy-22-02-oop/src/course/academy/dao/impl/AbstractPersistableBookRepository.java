@@ -2,6 +2,7 @@ package course.academy.dao.impl;
 
 import course.academy.dao.BookRepository;
 import course.academy.dao.Persistable;
+import course.academy.dao.Repository;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
 
