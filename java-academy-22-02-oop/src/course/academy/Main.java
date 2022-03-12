@@ -84,6 +84,8 @@ public class Main {
                     }
                 })
         ));
+//        var exitCommand = menu.new ExitCommand();
+//        System.out.println(exitCommand.execute());
         menu.show();
     }
 }
