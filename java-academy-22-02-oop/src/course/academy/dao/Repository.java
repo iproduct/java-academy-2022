@@ -3,6 +3,8 @@ package course.academy.dao;
 import course.academy.exception.NonexistingEntityException;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Public interface for managing lifecycle of entity objects
@@ -26,6 +28,8 @@ public interface Repository<K, V extends Identifiable<K>> {
      * @return array of all users
      */
     Collection<V> findAll();
+
+    List<V> findAllSorted(Comparator<V> comparator);
 
     /**
      * Find user by id

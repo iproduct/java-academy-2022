@@ -9,6 +9,8 @@ import course.academy.service.BookService;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class BookServiceImpl implements BookService {
@@ -21,6 +23,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public Collection<Book> getAllBooks() {
         return bookRepo.findAll();
+    }
+
+    @Override
+    public List<Book> getAllBooks(Comparator<Book> comp) {
+        return bookRepo.findAllSorted(comp);
     }
 
     @Override
@@ -39,7 +46,7 @@ public class BookServiceImpl implements BookService {
             throw new InvalidEntityDataException("Book title length should be between 2 and 50 characters.");
         }
         if(book.getPublishingDate().isAfter(LocalDate.now())){
-            throw new InvalidEntityDataException("Book publishing date: '" + book.getPublishingDate() + "' should be in the past.");
+            throw new InvalidEntityDataException("Book '" + book.getTitle() + "' publishing date: '" + book.getPublishingDate() + "' should be in the past.");
         }
         if(book.getPrice() < 0){
             throw new InvalidEntityDataException("Book price can not be negative.");

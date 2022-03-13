@@ -7,9 +7,7 @@ import course.academy.dao.Repository;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
         implements Repository<K,V>, Persistable {
@@ -23,6 +21,13 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
     @Override
     public Collection<V> findAll() {
         return books.values();
+    }
+
+    @Override
+    public List<V> findAllSorted(Comparator<V> comparator) {
+        var sorted = new ArrayList<>(books.values());
+        sorted.sort(comparator);
+        return sorted;
     }
 
     @Override

@@ -8,6 +8,9 @@ import course.academy.model.Book;
 
 import java.util.*;
 
+/**
+ * @deprecated: Use generic version {@link AbstractPersistableRepository}
+ */
 public abstract class AbstractPersistableBookRepository implements BookRepository, Persistable {
     private Map<Long, Book> books = new HashMap<>(); // O(1) find by ID
     private IdGenerator<Long> idGenerator = new LongIdGenerator();

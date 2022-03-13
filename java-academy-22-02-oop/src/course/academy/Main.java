@@ -13,7 +13,9 @@ import course.academy.view.Menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws NonexistingEntityException {
@@ -31,7 +33,7 @@ public class Main {
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        var invalidBook = new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2036", dtf),
+        var invalidBook = new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2016", dtf),
                 "Pearson", 35.5, "Detailed introduction to Java programming.");
         try {
             bookService.addBook(invalidBook);
@@ -46,6 +48,10 @@ public class Main {
         for(Book book : bookService.getAllBooks()) {
             System.out.println(book);
         }
+//        Iterator<Book> iter = bookService.getAllBooks().iterator();
+//        while(iter.hasNext()){
+//            System.out.println(">>> " + iter.next());
+//        }
         System.out.println();
 
         // find book by id
@@ -87,5 +93,21 @@ public class Main {
 //        var exitCommand = menu.new ExitCommand();
 //        System.out.println(exitCommand.execute());
         menu.show();
+        Stack<Integer> stack = new Stack<Integer>();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
