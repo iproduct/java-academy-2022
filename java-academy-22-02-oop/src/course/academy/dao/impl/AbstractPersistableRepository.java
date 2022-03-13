@@ -24,7 +24,7 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
     }
 
     @Override
-    public List<V> findAllSorted(Comparator<V> comparator) {
+    public List<V> findAllSorted(Comparator<V> comparator) { //O(N* log N) => O(1)
         var sorted = new ArrayList<>(books.values());
         sorted.sort(comparator);
         return sorted;

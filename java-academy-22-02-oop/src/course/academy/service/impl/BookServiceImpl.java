@@ -1,7 +1,6 @@
 package course.academy.service.impl;
 
 import course.academy.dao.BookRepository;
-import course.academy.dao.DaoFactory;
 import course.academy.exception.InvalidEntityDataException;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepo;
@@ -28,6 +26,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks(Comparator<Book> comp) {
         return bookRepo.findAllSorted(comp);
+    }
+
+    @Override
+    public List<Book> getAllBooksByDate(boolean ascending) {
+        return bookRepo.findAllSortedByDate(ascending);
     }
 
     @Override

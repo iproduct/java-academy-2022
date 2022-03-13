@@ -13,6 +13,7 @@ import course.academy.view.Menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
@@ -45,7 +46,12 @@ public class Main {
         bookService.deleteBookById(2L);
 //        bookService.deleteBookById(4L);
         // print books
-        for(Book book : bookService.getAllBooks()) {
+        for(Book book : bookService.getAllBooks(new Comparator<Book>(){
+            @Override
+            public int compare(Book book, Book other) {
+                return book.getPublishingDate().compareTo(other.getPublishingDate());
+            }
+        }.reversed())) {
             System.out.println(book);
         }
 //        Iterator<Book> iter = bookService.getAllBooks().iterator();
