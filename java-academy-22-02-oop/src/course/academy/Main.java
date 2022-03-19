@@ -46,14 +46,13 @@ public class Main {
         bookService.deleteBookById(2L);
 //        bookService.deleteBookById(4L);
         // print books
-        for(Book book : bookService.getAllBooks(new Comparator<Book>(){
-            @Override
-            public int compare(Book book, Book other) {
-                return book.getPublishingDate().compareTo(other.getPublishingDate());
-            }
-        }.reversed())) {
-            System.out.println(book);
-        }
+       bookService.getAllBooks(
+                Comparator.comparing(Book::getPublishingDate).reversed()
+//                Comparator.<Book, LocalDate>comparing(book -> book.getPublishingDate()).reversed()
+//                (book, other) -> other.getPublishingDate().compareTo(book.getPublishingDate())
+        ).forEach(System.out::println);
+//        ).forEach(book -> System.out.println(book));
+
 //        Iterator<Book> iter = bookService.getAllBooks().iterator();
 //        while(iter.hasNext()){
 //            System.out.println(">>> " + iter.next());

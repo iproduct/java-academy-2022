@@ -1,12 +1,11 @@
 package course.academy.dao.impl;
 
-import course.academy.dao.BookRepository;
 import course.academy.dao.Identifiable;
 import course.academy.dao.Persistable;
 import course.academy.dao.Repository;
 import course.academy.exception.NonexistingEntityException;
-import course.academy.model.Book;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
@@ -34,6 +33,25 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
     public V findById(K id) {
         return books.get(id);
     }
+
+//    @Override
+//    public V findById(K id, Class<V> cls) {
+//        try {
+//            var field = cls.getDeclaredField("id");
+//            field.setAccessible(true);
+//            System.out.println(">>> private ID = " + field.get((V) books.get(id)));
+//            var ctor = cls.getConstructor();
+//            V obj = ctor.newInstance();
+//            if (cls.isInstance(obj)) {
+//                System.out.println(">>>> Is instance of " + cls.getSimpleName());
+//            }
+//        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+//        return books.get(id);
+//    }
 
     @Override
     public V create(V book) {
