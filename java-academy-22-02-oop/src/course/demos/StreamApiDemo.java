@@ -11,24 +11,25 @@ public class StreamApiDemo {
                     System.out.println(("In before skip map: " + word));
                     return word;
                 })
-                .skip(2)
+                .skip(1)
                 .map(word -> {
                     System.out.println(("In map: " + word));
                     return word.toUpperCase();
                 })
                 .filter(word -> {
                     System.out.println(("In filter: " + word));
-                    return word.contains("Z");
+                    return word.contains("A");
                 })
                 .mapToInt(word -> {
                     System.out.println(("In second map: " + word));
                     return word.length();
                 })
-//                .limit(2)
-        .average();
+                .limit(2)
+                .boxed()
+//        .average();
 //                .toArray();
-//                .collect(Collectors.toList());
+                .collect(Collectors.toList());
 //                .collect(Collectors.joining(" | "));
-        System.out.println(result.orElse(0));
+        System.out.println(result);
     }
 }

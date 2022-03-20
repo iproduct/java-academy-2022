@@ -2,9 +2,9 @@ package course.academy;
 
 import course.academy.dao.BookRepository;
 import course.academy.dao.DaoFactory;
+import course.academy.dao.impl.DaoFactoryMemoryImpl;
 import course.academy.exception.InvalidEntityDataException;
 import course.academy.exception.NonexistingEntityException;
-import course.academy.dao.impl.DaoFactoryMemoryImpl;
 import course.academy.model.Book;
 import course.academy.model.MockBooks;
 import course.academy.service.BookService;
@@ -14,7 +14,6 @@ import course.academy.view.Menu;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -46,11 +45,10 @@ public class Main {
         bookService.deleteBookById(2L);
 //        bookService.deleteBookById(4L);
         // print books
-       bookService.getAllBooks(
-                Comparator.comparing(Book::getPublishingDate).reversed()
+        var pubDateCompDesc = Comparator.comparing(Book::getPublishingDate).reversed();
+        bookService.getAllBooks(pubDateCompDesc).forEach(System.out::println);
 //                Comparator.<Book, LocalDate>comparing(book -> book.getPublishingDate()).reversed()
 //                (book, other) -> other.getPublishingDate().compareTo(book.getPublishingDate())
-        ).forEach(System.out::println);
 //        ).forEach(book -> System.out.println(book));
 
 //        Iterator<Book> iter = bookService.getAllBooks().iterator();
