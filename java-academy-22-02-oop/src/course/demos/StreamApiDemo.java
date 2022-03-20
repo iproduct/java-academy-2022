@@ -1,5 +1,7 @@
 package course.demos;
 
+import course.demos.util.Tuple2;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -20,16 +22,32 @@ public class StreamApiDemo {
                     System.out.println(("In filter: " + word));
                     return word.contains("A");
                 })
-                .mapToInt(word -> {
+                .map(word -> {
                     System.out.println(("In second map: " + word));
-                    return word.length();
+                    return new Tuple2(word, Integer.valueOf(word.length()));
                 })
                 .limit(2)
-                .boxed()
 //        .average();
 //                .toArray();
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(tuple2 -> tuple2.getV1(), tuple2 -> tuple2.getV2()));
 //                .collect(Collectors.joining(" | "));
         System.out.println(result);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
