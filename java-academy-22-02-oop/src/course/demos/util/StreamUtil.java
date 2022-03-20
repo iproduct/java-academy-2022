@@ -19,7 +19,7 @@ public class StreamUtil {
         // Zipping looses DISTINCT and SORTED characteristics
         int characteristics = ((aSpliterator.characteristics() & bSpliterator.characteristics()
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED))
-                | (aSpliterator.characteristics() & SIZED | bSpliterator.characteristics() & SIZED));
+                | (aSpliterator.characteristics() & Spliterator.SIZED | bSpliterator.characteristics() & Spliterator.SIZED));
 
         long zipSize = (aSpliterator.getExactSizeIfKnown() >= 0) ?
                 ((bSpliterator.getExactSizeIfKnown() >= 0) ?
