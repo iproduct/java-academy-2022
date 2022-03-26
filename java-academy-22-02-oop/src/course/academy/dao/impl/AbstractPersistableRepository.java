@@ -1,15 +1,13 @@
 package course.academy.dao.impl;
 
 import course.academy.dao.Identifiable;
-import course.academy.dao.Persistable;
-import course.academy.dao.Repository;
+import course.academy.dao.PersistableRepository;
 import course.academy.exception.NonexistingEntityException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
-        implements Repository<K,V>, Persistable {
+        implements PersistableRepository<K,V> {
     private Map<K, V> books = new HashMap<>(); // O(1) find by ID
     private IdGenerator<K> idGenerator;
 
