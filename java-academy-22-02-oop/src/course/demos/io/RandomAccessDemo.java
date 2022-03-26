@@ -19,7 +19,7 @@ public class RandomAccessDemo {
                         }
                     });
             f.seek(4 * 8); // go to 5-th record
-            f.writeDouble(42.0);
+            f.writeDouble(42.0); // and update it
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
