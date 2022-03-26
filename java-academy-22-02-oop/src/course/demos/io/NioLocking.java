@@ -19,7 +19,11 @@ public class NioLocking {
             for(int i = 0; i < LENGTH; i++) {
                 out.put((byte)'x');
             }
+            new LockUpdate(out, LENGTH/2, LENGTH);
+            new LockUpdate(out, 0, LENGTH/3);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -29,8 +33,8 @@ public class NioLocking {
         private int start, end;
 
         public LockUpdate(ByteBuffer memoryMappedBuffer, int start, int end) {
-            memoryMappedBuffer.position(start);
             memoryMappedBuffer.limit(end);
+            memoryMappedBuffer.position(start);
             this.buff = memoryMappedBuffer.slice();
             this.start = start;
             this.end = end;
@@ -42,7 +46,9 @@ public class NioLocking {
                 System.out.printf("Successfully locked range [%d,%d].%n", start, end);
                 // update data
                 while (buff.position() < buff.limit() - 1) {
-                    buff.put((byte)(buff.get() + 1));
+                    var value = (byte)(buff.get() + 1);
+                    buff.position(buff.position() - 1);
+                    buff.put(value);
                 }
                 //release file lock
                 lock.release();
