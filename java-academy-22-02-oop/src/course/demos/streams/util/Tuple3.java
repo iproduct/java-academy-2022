@@ -1,4 +1,4 @@
-package course.demos.util;
+package course.demos.streams.util;
 
 import java.util.StringJoiner;
 

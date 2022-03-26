@@ -1,6 +1,6 @@
-package course.demos;
+package course.demos.streams;
 
-import course.demos.util.Tuple2;
+import course.demos.streams.util.Tuple2;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

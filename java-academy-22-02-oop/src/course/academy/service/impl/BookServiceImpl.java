@@ -53,7 +53,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book addBook(Book book) throws InvalidEntityDataException {
         try {
-            bookValidator.validateBook(book);
+            bookValidator.validate(book);
         } catch (ConstraintViolationException ex) {
             throw new InvalidEntityDataException(
                     String.format("Error creating book '%s'", book.getTitle()),
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book updateBook(Book book) throws NonexistingEntityException, InvalidEntityDataException {
         try {
-            bookValidator.validateBook(book);
+            bookValidator.validate(book);
         } catch (ConstraintViolationException ex) {
             throw new InvalidEntityDataException(
                     String.format("Error creating book '%s'", book.getTitle()),

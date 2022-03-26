@@ -1,4 +1,4 @@
-package course.demos.util;
+package course.demos.streams.util;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -7,8 +7,6 @@ import java.util.Spliterators;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import static java.util.Spliterator.SIZED;
 
 public class StreamUtil {
     public static <A, B, C> Stream<C> zip(Stream<A> streamA, Stream<B> streamB, BiFunction<A, B, C> zipper) {

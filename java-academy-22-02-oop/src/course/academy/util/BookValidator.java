@@ -2,7 +2,6 @@ package course.academy.util;
 
 import course.academy.exception.ConstraintViolation;
 import course.academy.exception.ConstraintViolationException;
-import course.academy.exception.InvalidEntityDataException;
 import course.academy.model.Book;
 
 import java.time.LocalDate;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookValidator {
-    public void validateBook(Book book) throws ConstraintViolationException {
+    public void validate(Book book) throws ConstraintViolationException {
         List<ConstraintViolation> violations = new ArrayList<>();
         var titleLength = book.getTitle().trim().length();
         if(titleLength < 2 || titleLength > 50){

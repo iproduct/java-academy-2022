@@ -1,4 +1,4 @@
-package course.demos;
+package course.demos.streams;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
