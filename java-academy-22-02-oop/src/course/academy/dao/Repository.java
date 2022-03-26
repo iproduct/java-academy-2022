@@ -37,6 +37,11 @@ public interface Repository<K, V extends Identifiable<K>> {
      * @return the user with given id, or null if id not found in repository
      */
     V findById(K id);
+    default V findById(K id, Class<V> cls){
+        System.out.println("Doing something with class " + cls.getSimpleName());
+        return findById(id);
+    }
+
     V create(V entity);
     V update(V entity) throws NonexistingEntityException;
     V deleteById(K id) throws NonexistingEntityException;

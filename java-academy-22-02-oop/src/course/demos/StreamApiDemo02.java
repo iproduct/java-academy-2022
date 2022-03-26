@@ -5,6 +5,7 @@ import course.demos.util.Tuple2;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
@@ -38,15 +39,15 @@ public class StreamApiDemo02 {
                         () -> new Tuple2(counter.incrementAndGet(), Math.random()))
                 .limit(100).parallel();
 //        countedRandoms.forEach(tuple2 -> System.out.printf("%s -> %s%n", tuple2.getV1(),tuple2.getV2()));
-        var counterStream = IntStream.iterate(1, i -> i + 1).boxed();  //mapToObj(i -> Integer.valueOf(i));
+        var counterStream = IntStream.iterate(1, i -> i + 1).mapToObj(Integer::valueOf); //mapToObj(Integer::new);
 //        counterStream.forEach(System.out::println);
         var countedRandomsZip =
                 StreamUtil.zip(counterStream, streamGenerated, (count, random) -> new Tuple2<>(count, random));
-//        countedRandomsZip.forEach(tuple2 -> System.out.printf("%s -> %s%n", tuple2.getV1(),tuple2.getV2()));
+        countedRandomsZip.forEach(tuple2 -> System.out.printf("%s -> %s%n", tuple2.getV1(),tuple2.getV2()));
 
         // String stream
         var charsStream = streamOfVals.flatMapToInt(str -> str.chars());
-        charsStream.forEach(ch -> System.out.print((char)ch + ", "));
+//        charsStream.forEach(ch -> System.out.print((char)ch + ", "));
     }
 }
 
