@@ -3,6 +3,7 @@ package course.academy;
 import course.academy.dao.BookRepository;
 import course.academy.dao.DaoFactory;
 import course.academy.dao.impl.DaoFactoryMemoryImpl;
+import course.academy.exception.ConstraintViolationException;
 import course.academy.exception.InvalidEntityDataException;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
@@ -16,15 +17,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) throws NonexistingEntityException {
+    public static void main(String[] args) {
         DaoFactory daoFactory = new DaoFactoryMemoryImpl();
         BookRepository bookRepository = daoFactory.createBookRepository();
 
         BookService bookService = new BookServiceImpl(bookRepository);
 
-        for(Book book : MockBooks.MOCK_BOOKS){
+        for (Book book : MockBooks.MOCK_BOOKS) {
             try {
                 bookService.addBook(book);
             } catch (InvalidEntityDataException e) {
@@ -33,16 +35,32 @@ public class Main {
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        var invalidBook = new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2016", dtf),
-                "Pearson", 35.5, "Detailed introduction to Java programming.");
+        var invalidBook = new Book("T", "Bruce Eckel", LocalDate.parse("10.02.2023", dtf),
+                "Pearson", -35.5, "Detailed introduction to Java programming.");
         try {
             bookService.addBook(invalidBook);
-        } catch (InvalidEntityDataException e) {
-            e.printStackTrace();
+        } catch (InvalidEntityDataException ex) {
+            var sb = new StringBuilder(ex.getMessage());
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                sb.append(", invalid fields:\n");
+                var violations = ((ConstraintViolationException) ex.getCause()).getFieldViolations();
+                sb.append(violations.stream().map(v -> String.format(" - %s.%s [%s] - %s",
+                                v.getType().substring(v.getType().lastIndexOf(".") + 1),
+                                v.getField(),
+                                v.getInvalidValue(),
+                                v.getErrorMessage())
+                        ).collect(Collectors.joining("\n"))
+                );
+            }
+            System.out.println(sb);
         }
 
         // delete books 2 and 4
-        bookService.deleteBookById(2L);
+        try {
+            bookService.deleteBookById(2L);
+        } catch (NonexistingEntityException e) {
+            e.printStackTrace();
+        }
 //        bookService.deleteBookById(4L);
         // print books
         var pubDateCompDesc = Comparator.comparing(Book::getPublishingDate).reversed();
@@ -58,7 +76,12 @@ public class Main {
         System.out.println();
 
         // find book by id
-        Book thirdBook = bookService.getBookById(3L);
+        Book thirdBook = null;
+        try {
+            thirdBook = bookService.getBookById(3L);
+        } catch (NonexistingEntityException e) {
+            e.printStackTrace();
+        }
         System.out.println(thirdBook);
 
         // find by id already deleted boook
@@ -72,8 +95,16 @@ public class Main {
         System.out.println();
         thirdBook.setTitle("Third Book");
         thirdBook.setPrice(42);
-        bookService.updateBook(thirdBook);
-        System.out.println(bookService.getBookById(3L));
+        try {
+            bookService.updateBook(thirdBook);
+        } catch (NonexistingEntityException | InvalidEntityDataException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(bookService.getBookById(3L));
+        } catch (NonexistingEntityException e) {
+            e.printStackTrace();
+        }
         System.out.println("Program finished normally.");
 
         // Create and show main menu

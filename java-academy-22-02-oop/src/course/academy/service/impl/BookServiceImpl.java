@@ -1,21 +1,29 @@
 package course.academy.service.impl;
 
 import course.academy.dao.BookRepository;
+import course.academy.exception.ConstraintViolationException;
 import course.academy.exception.InvalidEntityDataException;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
 import course.academy.service.BookService;
+import course.academy.util.BookValidator;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepo;
+    private final BookValidator bookValidator;
 
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepo = bookRepository;
+        this.bookValidator = new BookValidator();
+    }
+
+    public BookServiceImpl(BookRepository bookRepository, BookValidator bookValidator) {
+        this.bookRepo = bookRepository;
+        this.bookValidator = bookValidator;
     }
 
     @Override
@@ -44,21 +52,27 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addBook(Book book) throws InvalidEntityDataException {
-        var titleLength = book.getTitle().trim().length();
-        if(titleLength < 2 || titleLength > 50){
-            throw new InvalidEntityDataException("Book title length should be between 2 and 50 characters.");
-        }
-        if(book.getPublishingDate().isAfter(LocalDate.now())){
-            throw new InvalidEntityDataException("Book '" + book.getTitle() + "' publishing date: '" + book.getPublishingDate() + "' should be in the past.");
-        }
-        if(book.getPrice() < 0){
-            throw new InvalidEntityDataException("Book price can not be negative.");
+        try {
+            bookValidator.validateBook(book);
+        } catch (ConstraintViolationException ex) {
+            throw new InvalidEntityDataException(
+                    String.format("Error creating book '%s'", book.getTitle()),
+                    ex
+            );
         }
         return bookRepo.create(book);
     }
 
     @Override
-    public Book updateBook(Book book) throws NonexistingEntityException {
+    public Book updateBook(Book book) throws NonexistingEntityException, InvalidEntityDataException {
+        try {
+            bookValidator.validateBook(book);
+        } catch (ConstraintViolationException ex) {
+            throw new InvalidEntityDataException(
+                    String.format("Error creating book '%s'", book.getTitle()),
+                    ex
+            );
+        }
         return bookRepo.update(book);
     }
 

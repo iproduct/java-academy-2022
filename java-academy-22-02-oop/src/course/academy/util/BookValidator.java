@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookValidator {
-    void validateBook(Book book) throws ConstraintViolationException {
+    public void validateBook(Book book) throws ConstraintViolationException {
         List<ConstraintViolation> violations = new ArrayList<>();
         var titleLength = book.getTitle().trim().length();
         if(titleLength < 2 || titleLength > 50){

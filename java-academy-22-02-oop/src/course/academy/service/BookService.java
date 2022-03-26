@@ -16,7 +16,7 @@ public interface BookService {
 
     Book getBookById(Long id) throws NonexistingEntityException;
     Book addBook(Book book) throws InvalidEntityDataException;
-    Book updateBook(Book book) throws NonexistingEntityException;
+    Book updateBook(Book book) throws NonexistingEntityException, InvalidEntityDataException;
     Book deleteBookById(Long id) throws NonexistingEntityException;
     long count();
 }

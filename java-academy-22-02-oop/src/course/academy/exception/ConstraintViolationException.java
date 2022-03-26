@@ -51,11 +51,6 @@ public class ConstraintViolationException extends Exception {
     }
 
     @Override
-    public String getMessage() {
-        return super.getMessage() + ", " + "Constraint violations: " + getFieldViolations();
-    }
-
-    @Override
     public String toString() {
         return new StringJoiner(", ", ConstraintViolationException.class.getSimpleName() + "[", "]")
                 .add("fieldViolations=" + fieldViolations)
