@@ -18,10 +18,7 @@ public class PersistableRepositoryFileImpl<K, V extends Identifiable<K>> extends
         try (var out = new ObjectInputStream(
                 new BufferedInputStream(
                         new FileInputStream(dbFileName)))) {
-            var entities = (Collection<V>)out.readObject();
-            for(var entity: entities) {
-                create(entity);
-            }
+            addAll((Collection<V>)out.readObject());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
