@@ -43,6 +43,7 @@ public interface Repository<K, V extends Identifiable<K>> {
     }
 
     V create(V entity);
+    void addAll(Collection<V> entities);
     V update(V entity) throws NonexistingEntityException;
     V deleteById(K id) throws NonexistingEntityException;
     long count();

@@ -15,10 +15,10 @@ public class BookRepositoryMemoryImpl extends AbstractPersistableRepository<Long
     }
 
     @Override
-    public Book create(Book book) {
-        booksByDate.putIfAbsent(book.getPublishingDate(), new ArrayList<>());
-        booksByDate.get(book.getPublishingDate()).add(book); // index each book by date
-        return super.create(book);
+    public Book create(Book entity) {
+        booksByDate.putIfAbsent(entity.getPublishingDate(), new ArrayList<>());
+        booksByDate.get(entity.getPublishingDate()).add(entity); // index each book by date
+        return super.create(entity);
     }
 
     @Override

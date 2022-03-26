@@ -52,20 +52,27 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
 //    }
 
     @Override
-    public V create(V book) {
-        book.setId(idGenerator.getNextId());
-        books.put(book.getId(), book);
-        return book;
+    public V create(V entity) {
+        entity.setId(idGenerator.getNextId());
+        books.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override
-    public V update(V book) throws NonexistingEntityException {
-        V old = findById(book.getId());
-        if(old == null) {
-            throw new NonexistingEntityException("Book with ID='" + book.getId() + "' does not exist.");
+    public void addAll(Collection<V> entities) {
+        for(var entity: entities) {
+            books.put(entity.getId(), entity);
         }
-        books.put(book.getId(), book);
-        return book;
+    }
+
+    @Override
+    public V update(V entity) throws NonexistingEntityException {
+        V old = findById(entity.getId());
+        if(old == null) {
+            throw new NonexistingEntityException("Book with ID='" + entity.getId() + "' does not exist.");
+        }
+        books.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override
