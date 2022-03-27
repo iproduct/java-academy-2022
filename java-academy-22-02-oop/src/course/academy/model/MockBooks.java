@@ -8,32 +8,32 @@ public class MockBooks {
     static {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         MOCK_BOOKS = new Book[]{
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
+                new Book("Thinking in Java", "Bruce Eckel", 2006,
                         "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
+                new Book("Effective Java", "Joshua Bloch",2017,
                         "Addison-Wesley Professional", 35.5, "In depth Java book."),
                 new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
+                       2018, "McGraw-Hill Education", 51.85),
+                new Book("Thinking in Java", "Bruce Eckel", 2006,
                         "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
+                new Book("Effective Java", "Joshua Bloch", 2017,
                         "Addison-Wesley Professional", 35.5, "In depth Java book."),
                 new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
+                        2018, "McGraw-Hill Education", 51.85),
+                new Book("Thinking in Java", "Bruce Eckel", 2006,
                         "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
+                new Book("Effective Java", "Joshua Bloch",2017,
                         "Addison-Wesley Professional", 35.5, "In depth Java book."),
                 new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
+                        2018, "McGraw-Hill Education", 51.85),
                 new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85),
-                new Book("Thinking in Java", "Bruce Eckel", LocalDate.parse("10.02.2006", dtf),
+                        2018, "McGraw-Hill Education", 51.85),
+                new Book("Thinking in Java", "Bruce Eckel",2006,
                         "Pearson", 35.5, "Detailed introduction to Java programming."),
-                new Book("Effective Java", "Joshua Bloch", LocalDate.parse("27.12.2017", dtf),
+                new Book("Effective Java", "Joshua Bloch", 2017,
                         "Addison-Wesley Professional", 35.5, "In depth Java book."),
                 new Book("Java: The Complete Reference", "Herbert Schildt ",
-                        LocalDate.parse("12.12.2018", dtf), "McGraw-Hill Education", 51.85)
+                        2018, "McGraw-Hill Education", 51.85)
         };
     }
 }

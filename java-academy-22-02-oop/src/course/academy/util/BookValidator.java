@@ -17,10 +17,10 @@ public class BookValidator {
                     new ConstraintViolation(book.getClass().getName(), "title", book.getTitle(),
                             "Book title length should be between 2 and 50 characters"));
         }
-        if(book.getPublishingDate().isAfter(LocalDate.now())){
+        if(book.getYear() > LocalDate.now().getYear()){
             violations.add(
-                    new ConstraintViolation(book.getClass().getName(), "publishingDate", book.getPublishingDate(),
-                            "Publishing date: '" + book.getPublishingDate() + "' should be in the past"));
+                    new ConstraintViolation(book.getClass().getName(), "publishingDate", book.getYear(),
+                            "Publishing date: '" + book.getYear() + "' should be in the past"));
         }
         if(book.getPrice() < 0){
             violations.add(

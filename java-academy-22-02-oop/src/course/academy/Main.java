@@ -1,16 +1,20 @@
 package course.academy;
 
+import course.academy.controller.BookController;
 import course.academy.dao.BookRepository;
 import course.academy.dao.DaoFactory;
 import course.academy.dao.impl.DaoFactoryImpl;
 import course.academy.exception.ConstraintViolationException;
 import course.academy.exception.InvalidEntityDataException;
 import course.academy.model.Book;
+import course.academy.model.MockBooks;
 import course.academy.service.BookService;
 import course.academy.service.impl.BookServiceImpl;
+import course.academy.view.Menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -30,30 +34,29 @@ public class Main {
 //        }
 //
 //        bookRepository.save();
-        bookService.loadData();
 
-        bookService.getAllBooks().forEach(System.out::println);
+//        bookService.getAllBooks().forEach(System.out::println);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        var invalidBook = new Book("Thinking in C++", "Bruce Eckel", LocalDate.parse("10.02.2005", dtf),
-                "Pearson", 25.5, "Detailed introduction to C++ programming.");
-        try {
-            bookService.addBook(invalidBook);
-        } catch (InvalidEntityDataException ex) {
-            var sb = new StringBuilder(ex.getMessage());
-            if (ex.getCause() instanceof ConstraintViolationException) {
-                sb.append(", invalid fields:\n");
-                var violations = ((ConstraintViolationException) ex.getCause()).getFieldViolations();
-                sb.append(violations.stream().map(v -> String.format(" - %s.%s [%s] - %s",
-                                v.getType().substring(v.getType().lastIndexOf(".") + 1),
-                                v.getField(),
-                                v.getInvalidValue(),
-                                v.getErrorMessage())
-                        ).collect(Collectors.joining("\n"))
-                );
-            }
-            System.out.println(sb);
-        }
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//        var invalidBook = new Book("Thinking in C++", "Bruce Eckel", LocalDate.parse("10.02.2005", dtf),
+//                "Pearson", 25.5, "Detailed introduction to C++ programming.");
+//        try {
+//            bookService.addBook(invalidBook);
+//        } catch (InvalidEntityDataException ex) {
+//            var sb = new StringBuilder(ex.getMessage());
+//            if (ex.getCause() instanceof ConstraintViolationException) {
+//                sb.append(", invalid fields:\n");
+//                var violations = ((ConstraintViolationException) ex.getCause()).getFieldViolations();
+//                sb.append(violations.stream().map(v -> String.format(" - %s.%s [%s] - %s",
+//                                v.getType().substring(v.getType().lastIndexOf(".") + 1),
+//                                v.getField(),
+//                                v.getInvalidValue(),
+//                                v.getErrorMessage())
+//                        ).collect(Collectors.joining("\n"))
+//                );
+//            }
+//            System.out.println(sb);
+//        }
 //
 //        // delete books 2 and 4
 //        try {
@@ -107,27 +110,9 @@ public class Main {
 //        }
 //        System.out.println("Program finished normally.");
 //
-//        // Create and show main menu
-//        var menu = new Menu("Main Menu", List.of(
-//                new Menu.Option("Load Books", new Menu.Command() {
-//                    @Override
-//                    public String execute() {
-//                        System.out.println("Loading books ...");
-//                        return "Books loaded successfully.";
-//                    }
-//                }),
-//                new Menu.Option("Save Books", new Menu.Command() {
-//                    @Override
-//                    public String execute() {
-//                        System.out.println("Saving books ...");
-//                        return "Books saved successfully.";
-//                    }
-//                })
-//        ));
-////        var exitCommand = menu.new ExitCommand();
-////        System.out.println(exitCommand.execute());
-//        menu.show();
-//        Stack<Integer> stack = new Stack<Integer>();
+        // Create and show main menu
+        var bookController = new BookController(bookService);
+        bookController.init();
     }
 }
 

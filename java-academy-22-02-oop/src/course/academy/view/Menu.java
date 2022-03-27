@@ -1,5 +1,7 @@
 package course.academy.view;
 
+import course.academy.exception.InvalidEntityDataException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,8 +32,9 @@ public class Menu {
                     '}';
         }
     }
+
     public interface Command {
-        String execute();
+        String execute() throws InvalidEntityDataException;
     }
 
     public class ExitCommand implements Command {
@@ -120,7 +123,12 @@ public class Menu {
                     System.out.println("Error: Invalid choice. Please enter a valid number between 1 and " + options.size());
                 }
             } while (choice < 1 || choice > options.size());
-            var result = options.get(choice - 1).getCommand().execute();
+            String result = null;
+            try {
+                result = options.get(choice - 1).getCommand().execute();
+            } catch (InvalidEntityDataException e) {
+                System.out.println("Error: " + e.getMessage());;
+            }
             System.out.println(result);
             if(choice == options.size()) { // Exit command chosen
                 break;

@@ -14,8 +14,7 @@ public class RegexParsingDemo {
         var dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         StringBuilder sb = new StringBuilder();
         for (Book book : MOCK_BOOKS) {
-            String dateStr = book.getPublishingDate().format(dtf);
-            String data = String.format("Published: %s, Book '%s' [%1$s].", dateStr, book.getTitle());
+            String data = String.format("Published: %d, Book '%s' [%1$s].", book.getYear(), book.getTitle());
             Pattern pattern = Pattern.compile("(?<day>\\d{2}).(?<month>\\d{2}).(?<year>\\d{4})");
             Matcher matcher = pattern.matcher(data);
 //            int from = 0;

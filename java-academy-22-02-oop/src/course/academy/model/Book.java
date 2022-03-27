@@ -3,14 +3,13 @@ package course.academy.model;
 import course.academy.dao.Identifiable;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Book implements Comparable<Book>, Identifiable<Long>, Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String title;
-    private String author;
-    private LocalDate publishingDate;
+    private String authors;
+    private int year;
     private String publisher;
     private double price;
     private String description;
@@ -25,15 +24,15 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
     }
 
     // Required args constructor
-    public Book(String title, String author, LocalDate publishingDate, String publisher, double price) {
+    public Book(String title, String author, int publishingDate, String publisher, double price) {
         this.title = title;
-        this.author = author;
-        this.publishingDate = publishingDate;
+        this.authors = author;
+        this.year = publishingDate;
         this.publisher = publisher;
         this.price = price;
     }
 
-    public Book(String title, String author, LocalDate publishingDate, String publisher, double price, String description) {
+    public Book(String title, String author, int publishingDate, String publisher, double price, String description) {
         this(title, author, publishingDate, publisher, price);
         this.description = description;
     }
@@ -54,20 +53,20 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(String authors) {
+        this.authors = authors;
     }
 
-    public LocalDate getPublishingDate() {
-        return publishingDate;
+    public int getYear() {
+        return year;
     }
 
-    public void setPublishingDate(LocalDate publishingDate) {
-        this.publishingDate = publishingDate;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getPublisher() {
@@ -90,8 +89,8 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
         if(description == null){
             description = "id=" + id +
                     ", title='" + title + '\'' +
-                    ", author='" + author + '\'' +
-                    ", publishingDate=" + publishingDate +
+                    ", author='" + authors + '\'' +
+                    ", publishingDate=" + year +
                     ", publisher='" + publisher + '\'' +
                     ", price=" + price;
         }
@@ -107,8 +106,8 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", publishingDate=" + publishingDate +
+                ", author='" + authors + '\'' +
+                ", publishingDate=" + year +
                 ", publisher='" + publisher + '\'' +
                 ", price=" + price +
                 ", description='" + getDescription() + '\'' +

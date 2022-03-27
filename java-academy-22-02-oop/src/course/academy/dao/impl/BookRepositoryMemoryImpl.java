@@ -9,7 +9,7 @@ import java.util.*;
 
 public class BookRepositoryMemoryImpl extends AbstractPersistableRepository<Long, Book>
         implements BookRepository {
-    private NavigableMap<LocalDate, List<Book>> booksByDate = new TreeMap<>();
+    private NavigableMap<Integer, List<Book>> booksByDate = new TreeMap<>();
 
     public BookRepositoryMemoryImpl(IdGenerator<Long> idGenerator) {
         super(idGenerator);
@@ -17,8 +17,8 @@ public class BookRepositoryMemoryImpl extends AbstractPersistableRepository<Long
 
     @Override
     public Book create(Book entity) {
-        booksByDate.putIfAbsent(entity.getPublishingDate(), new ArrayList<>());
-        booksByDate.get(entity.getPublishingDate()).add(entity); // index each book by date
+        booksByDate.putIfAbsent(entity.getYear(), new ArrayList<>());
+        booksByDate.get(entity.getYear()).add(entity); // index each book by date
         return super.create(entity);
     }
 
