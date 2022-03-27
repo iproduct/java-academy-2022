@@ -1,8 +1,11 @@
 package course.academy.dao.impl;
 
+import course.academy.dao.IdGenerator;
 import course.academy.dao.Identifiable;
+import course.academy.dao.LongIdGenerator;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PersistableRepositoryFileImpl<K, V extends Identifiable<K>> extends AbstractPersistableRepository<K, V> {
@@ -15,10 +18,12 @@ public class PersistableRepositoryFileImpl<K, V extends Identifiable<K>> extends
 
     @Override
     public void load() {
-        try (var out = new ObjectInputStream(
+        try (var in = new ObjectInputStream(
                 new BufferedInputStream(
                         new FileInputStream(dbFileName)))) {
-            addAll((Collection<V>)out.readObject());
+            clear();
+//            setIdGenerator(new LongIdGenerator((K) in.readObject()));
+            addAll((Collection<V>)in.readObject());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -33,7 +38,8 @@ public class PersistableRepositoryFileImpl<K, V extends Identifiable<K>> extends
         try (var out = new ObjectOutputStream(
                 new BufferedOutputStream(
                         new FileOutputStream(dbFileName)))) {
-            out.writeObject(findAll());
+            out.writeObject(getIdGenerator().getCurrentId());
+            out.writeObject(new ArrayList(findAll()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

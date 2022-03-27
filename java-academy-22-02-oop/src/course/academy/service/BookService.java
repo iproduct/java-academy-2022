@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public interface BookService {
+    void loadData();
     Collection<Book> getAllBooks();
     List<Book> getAllBooks(Comparator<Book> comp);
 

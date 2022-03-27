@@ -1,5 +1,6 @@
 package course.academy.dao.impl;
 
+import course.academy.dao.IdGenerator;
 import course.academy.dao.Identifiable;
 import course.academy.dao.PersistableRepository;
 import course.academy.exception.NonexistingEntityException;
@@ -66,6 +67,11 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
     }
 
     @Override
+    public void clear() {
+        books.clear();
+    }
+
+    @Override
     public V update(V entity) throws NonexistingEntityException {
         V old = findById(entity.getId());
         if(old == null) {
@@ -87,6 +93,14 @@ public abstract class AbstractPersistableRepository<K,V extends Identifiable<K>>
     @Override
     public long count() {
         return books.size();
+    }
+
+    public IdGenerator<K> getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(IdGenerator<K> idGenerator) {
+        this.idGenerator = idGenerator;
     }
 }
 

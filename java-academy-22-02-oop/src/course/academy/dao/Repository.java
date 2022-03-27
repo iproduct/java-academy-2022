@@ -11,18 +11,6 @@ import java.util.List;
  */
 public interface Repository<K, V extends Identifiable<K>> {
 
-    interface IdGenerator<K> {
-        K getNextId();
-    }
-
-    class LongIdGenerator implements IdGenerator<Long>{
-        private long lastId = 0;
-        @Override
-        public Long getNextId() {
-            return ++ lastId;
-        }
-    }
-
     /**
      * Find all users in repository
      * @return array of all users
@@ -44,6 +32,7 @@ public interface Repository<K, V extends Identifiable<K>> {
 
     V create(V entity);
     void addAll(Collection<V> entities);
+    void clear();
     V update(V entity) throws NonexistingEntityException;
     V deleteById(K id) throws NonexistingEntityException;
     long count();

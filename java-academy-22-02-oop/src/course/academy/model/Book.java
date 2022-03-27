@@ -2,9 +2,11 @@ package course.academy.model;
 
 import course.academy.dao.Identifiable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Book implements Comparable<Book>, Identifiable<Long> {
+public class Book implements Comparable<Book>, Identifiable<Long>, Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String title;
     private String author;

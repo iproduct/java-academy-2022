@@ -27,6 +27,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void loadData() {
+        bookRepo.load();
+    }
+
+    @Override
     public Collection<Book> getAllBooks() {
         return bookRepo.findAll();
     }
@@ -60,7 +65,9 @@ public class BookServiceImpl implements BookService {
                     ex
             );
         }
-        return bookRepo.create(book);
+        var newBook = bookRepo.create(book);
+        bookRepo.save();
+        return newBook;
     }
 
     @Override
@@ -73,12 +80,16 @@ public class BookServiceImpl implements BookService {
                     ex
             );
         }
-        return bookRepo.update(book);
+        var updated = bookRepo.update(book);
+        bookRepo.save();
+        return updated;
     }
 
     @Override
     public Book deleteBookById(Long id) throws NonexistingEntityException {
-        return bookRepo.deleteById(id);
+        var deleted = bookRepo.deleteById(id);
+        bookRepo.save();
+        return deleted;
     }
 
     @Override

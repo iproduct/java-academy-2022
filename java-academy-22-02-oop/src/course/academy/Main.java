@@ -2,6 +2,7 @@ package course.academy;
 
 import course.academy.dao.BookRepository;
 import course.academy.dao.DaoFactory;
+import course.academy.dao.impl.BookRepositoryFileImpl;
 import course.academy.dao.impl.DaoFactoryMemoryImpl;
 import course.academy.exception.ConstraintViolationException;
 import course.academy.exception.InvalidEntityDataException;
@@ -20,23 +21,29 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Main {
+    public static final String BOOKS_DB_FILENAME = "books.db";
     public static void main(String[] args) {
         DaoFactory daoFactory = new DaoFactoryMemoryImpl();
-        BookRepository bookRepository = daoFactory.createBookRepository();
+        BookRepository bookRepository = daoFactory.createBookRepositoryFile(BOOKS_DB_FILENAME);
 
         BookService bookService = new BookServiceImpl(bookRepository);
 
-        for (Book book : MockBooks.MOCK_BOOKS) {
-            try {
-                bookService.addBook(book);
-            } catch (InvalidEntityDataException e) {
-                e.printStackTrace();
-            }
-        }
+//        for (Book book : MockBooks.MOCK_BOOKS) {
+//            try {
+//                bookService.addBook(book);
+//            } catch (InvalidEntityDataException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        bookRepository.save();
+        bookService.loadData();
+
+        bookService.getAllBooks().forEach(System.out::println);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        var invalidBook = new Book("T", "Bruce Eckel", LocalDate.parse("10.02.2023", dtf),
-                "Pearson", -35.5, "Detailed introduction to Java programming.");
+        var invalidBook = new Book("Thinking in C++", "Bruce Eckel", LocalDate.parse("10.02.2005", dtf),
+                "Pearson", 25.5, "Detailed introduction to C++ programming.");
         try {
             bookService.addBook(invalidBook);
         } catch (InvalidEntityDataException ex) {
@@ -54,80 +61,80 @@ public class Main {
             }
             System.out.println(sb);
         }
-
-        // delete books 2 and 4
-        try {
-            bookService.deleteBookById(2L);
-        } catch (NonexistingEntityException e) {
-            e.printStackTrace();
-        }
-//        bookService.deleteBookById(4L);
-        // print books
-        var pubDateCompDesc = Comparator.comparing(Book::getPublishingDate).reversed();
-        bookService.getAllBooks(pubDateCompDesc).forEach(System.out::println);
-//                Comparator.<Book, LocalDate>comparing(book -> book.getPublishingDate()).reversed()
-//                (book, other) -> other.getPublishingDate().compareTo(book.getPublishingDate())
-//        ).forEach(book -> System.out.println(book));
-
-//        Iterator<Book> iter = bookService.getAllBooks().iterator();
-//        while(iter.hasNext()){
-//            System.out.println(">>> " + iter.next());
+//
+//        // delete books 2 and 4
+//        try {
+//            bookService.deleteBookById(2L);
+//        } catch (NonexistingEntityException e) {
+//            e.printStackTrace();
 //        }
-        System.out.println();
-
-        // find book by id
-        Book thirdBook = null;
-        try {
-            thirdBook = bookService.getBookById(3L);
-        } catch (NonexistingEntityException e) {
-            e.printStackTrace();
-        }
-        System.out.println(thirdBook);
-
-        // find by id already deleted boook
-        try {
-            System.out.println(bookService.getBookById(4L));
-        } catch (NonexistingEntityException ex) {
-            ex.printStackTrace();
-        }
-
-        // update thirdBook
-        System.out.println();
-        thirdBook.setTitle("Third Book");
-        thirdBook.setPrice(42);
-        try {
-            bookService.updateBook(thirdBook);
-        } catch (NonexistingEntityException | InvalidEntityDataException e) {
-            e.printStackTrace();
-        }
-        try {
-            System.out.println(bookService.getBookById(3L));
-        } catch (NonexistingEntityException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Program finished normally.");
-
-        // Create and show main menu
-        var menu = new Menu("Main Menu", List.of(
-                new Menu.Option("Load Books", new Menu.Command() {
-                    @Override
-                    public String execute() {
-                        System.out.println("Loading books ...");
-                        return "Books loaded successfully.";
-                    }
-                }),
-                new Menu.Option("Save Books", new Menu.Command() {
-                    @Override
-                    public String execute() {
-                        System.out.println("Saving books ...");
-                        return "Books saved successfully.";
-                    }
-                })
-        ));
-//        var exitCommand = menu.new ExitCommand();
-//        System.out.println(exitCommand.execute());
-        menu.show();
-        Stack<Integer> stack = new Stack<Integer>();
+////        bookService.deleteBookById(4L);
+//        // print books
+//        var pubDateCompDesc = Comparator.comparing(Book::getPublishingDate).reversed();
+//        bookService.getAllBooks(pubDateCompDesc).forEach(System.out::println);
+////                Comparator.<Book, LocalDate>comparing(book -> book.getPublishingDate()).reversed()
+////                (book, other) -> other.getPublishingDate().compareTo(book.getPublishingDate())
+////        ).forEach(book -> System.out.println(book));
+//
+////        Iterator<Book> iter = bookService.getAllBooks().iterator();
+////        while(iter.hasNext()){
+////            System.out.println(">>> " + iter.next());
+////        }
+//        System.out.println();
+//
+//        // find book by id
+//        Book thirdBook = null;
+//        try {
+//            thirdBook = bookService.getBookById(3L);
+//        } catch (NonexistingEntityException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(thirdBook);
+//
+//        // find by id already deleted boook
+//        try {
+//            System.out.println(bookService.getBookById(4L));
+//        } catch (NonexistingEntityException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        // update thirdBook
+//        System.out.println();
+//        thirdBook.setTitle("Third Book");
+//        thirdBook.setPrice(42);
+//        try {
+//            bookService.updateBook(thirdBook);
+//        } catch (NonexistingEntityException | InvalidEntityDataException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            System.out.println(bookService.getBookById(3L));
+//        } catch (NonexistingEntityException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Program finished normally.");
+//
+//        // Create and show main menu
+//        var menu = new Menu("Main Menu", List.of(
+//                new Menu.Option("Load Books", new Menu.Command() {
+//                    @Override
+//                    public String execute() {
+//                        System.out.println("Loading books ...");
+//                        return "Books loaded successfully.";
+//                    }
+//                }),
+//                new Menu.Option("Save Books", new Menu.Command() {
+//                    @Override
+//                    public String execute() {
+//                        System.out.println("Saving books ...");
+//                        return "Books saved successfully.";
+//                    }
+//                })
+//        ));
+////        var exitCommand = menu.new ExitCommand();
+////        System.out.println(exitCommand.execute());
+//        menu.show();
+//        Stack<Integer> stack = new Stack<Integer>();
     }
 }
 

@@ -5,21 +5,17 @@ import course.academy.dao.IdGenerator;
 import course.academy.model.Book;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
-public class BookRepositoryMemoryImpl extends AbstractPersistableRepository<Long, Book>
+public class BookRepositoryFileImpl extends PersistableRepositoryFileImpl<Long, Book>
         implements BookRepository {
     private NavigableMap<LocalDate, List<Book>> booksByDate = new TreeMap<>();
 
-    public BookRepositoryMemoryImpl(IdGenerator<Long> idGenerator) {
-        super(idGenerator);
-    }
-
-    @Override
-    public Book create(Book entity) {
-        booksByDate.putIfAbsent(entity.getPublishingDate(), new ArrayList<>());
-        booksByDate.get(entity.getPublishingDate()).add(entity); // index each book by date
-        return super.create(entity);
+    public BookRepositoryFileImpl(IdGenerator<Long> idGenerator, String dbFileName) {
+        super(idGenerator, dbFileName);
     }
 
     @Override
@@ -34,13 +30,5 @@ public class BookRepositoryMemoryImpl extends AbstractPersistableRepository<Long
             results.addAll(listByDate);
         }
         return results;
-    }
-
-    @Override
-    public void load() {
-    }
-
-    @Override
-    public void save() {
     }
 }

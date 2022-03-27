@@ -5,5 +5,8 @@ import course.academy.dao.UserRepository;
 
 public interface DaoFactory {
     BookRepository createBookRepository();
+
+    BookRepository createBookRepositoryFile(String dbFileNAme);
+
     UserRepository createUserRepository();
 }
