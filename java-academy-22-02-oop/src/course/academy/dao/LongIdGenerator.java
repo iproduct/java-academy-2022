@@ -19,4 +19,9 @@ public class LongIdGenerator implements IdGenerator<Long> {
     public Long getCurrentId() {
         return lastId;
     }
+
+    @Override
+    public void reset(Long newInitialValue) {
+        lastId = newInitialValue;
+    }
 }

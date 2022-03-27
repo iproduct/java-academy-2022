@@ -22,7 +22,7 @@ public class PersistableRepositoryFileImpl<K, V extends Identifiable<K>> extends
                 new BufferedInputStream(
                         new FileInputStream(dbFileName)))) {
             clear();
-//            setIdGenerator(new LongIdGenerator((K) in.readObject()));
+            getIdGenerator().reset((K) in.readObject());
             addAll((Collection<V>)in.readObject());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
