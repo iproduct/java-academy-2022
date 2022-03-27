@@ -2,9 +2,9 @@ package course.academy.dao.impl;
 
 import course.academy.dao.*;
 
-public class DaoFactoryMemoryImpl implements DaoFactory {
+public class DaoFactoryImpl implements DaoFactory {
     @Override
-    public BookRepository createBookRepository() {
+    public BookRepository createBookRepositoryMemory() {
         return new BookRepositoryMemoryImpl(new LongIdGenerator());
     }
 

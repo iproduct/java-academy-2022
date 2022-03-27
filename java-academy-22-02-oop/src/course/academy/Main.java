@@ -2,28 +2,21 @@ package course.academy;
 
 import course.academy.dao.BookRepository;
 import course.academy.dao.DaoFactory;
-import course.academy.dao.impl.BookRepositoryFileImpl;
-import course.academy.dao.impl.DaoFactoryMemoryImpl;
+import course.academy.dao.impl.DaoFactoryImpl;
 import course.academy.exception.ConstraintViolationException;
 import course.academy.exception.InvalidEntityDataException;
-import course.academy.exception.NonexistingEntityException;
 import course.academy.model.Book;
-import course.academy.model.MockBooks;
 import course.academy.service.BookService;
 import course.academy.service.impl.BookServiceImpl;
-import course.academy.view.Menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Main {
     public static final String BOOKS_DB_FILENAME = "books.db";
     public static void main(String[] args) {
-        DaoFactory daoFactory = new DaoFactoryMemoryImpl();
+        DaoFactory daoFactory = new DaoFactoryImpl();
         BookRepository bookRepository = daoFactory.createBookRepositoryFile(BOOKS_DB_FILENAME);
 
         BookService bookService = new BookServiceImpl(bookRepository);
