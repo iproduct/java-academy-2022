@@ -1,5 +1,6 @@
 package course.academy.dao;
 
+import course.academy.exception.EntityPersistenceException;
 import course.academy.exception.NonexistingEntityException;
 
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public interface Repository<K, V extends Identifiable<K>> {
      * Find all users in repository
      * @return array of all users
      */
-    Collection<V> findAll() throws SQLException;
+    Collection<V> findAll() throws EntityPersistenceException;
 
     List<V> findAllSorted(Comparator<V> comparator);
 

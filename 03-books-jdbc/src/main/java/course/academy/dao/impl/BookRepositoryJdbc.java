@@ -1,6 +1,7 @@
 package course.academy.dao.impl;
 
 import course.academy.dao.BookRepository;
+import course.academy.exception.EntityPersistenceException;
 import course.academy.exception.NonexistingEntityException;
 import course.academy.jdbc.JdbcSimpleDemo;
 import course.academy.model.Book;
@@ -39,20 +40,16 @@ public class BookRepositoryJdbc implements BookRepository {
     }
 
     @Override
-    public Collection<Book> findAll() throws SQLException {
+    public Collection<Book> findAll() throws EntityPersistenceException {
         try(var stmt = connection.prepareStatement(SELECT_ALL_BOOKS)) {
             // 4. Set params and execute SQL query
-            stmt.setDouble(1, 40.0);
             var rs = stmt.executeQuery();
             // 5. Transform ResultSet to Book
-            for(var book : toBooks(rs)){
-                System.out.println(book);
-            }
+           return toBooks(rs);
         } catch (SQLException ex) {
             log.error("Error creating connection to DB", ex);
-            throw ex;
+            throw new EntityPersistenceException("Error executing SQL query: " + SELECT_ALL_BOOKS, ex);
         }
-        return null;
     }
 
     @Override

@@ -3,6 +3,9 @@ package course.academy;
 import course.academy.dao.BookRepository;
 import course.academy.dao.impl.BookRepositoryJdbc;
 import course.academy.jdbc.JdbcSimpleDemo;
+import course.academy.service.BookService;
+import course.academy.service.impl.BookServiceImpl;
+import course.academy.util.BookValidator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,8 +30,12 @@ public class Main {
         // Create DB Connection
         Connection conn = createDbConnection(props);
         BookRepository bookRepo = new BookRepositoryJdbc(conn);
+        BookService bookService = new BookServiceImpl(bookRepo, new BookValidator());
+        var books = bookService.getAllBooks();
+        books.forEach(System.out::println);
 
         // Close DB connection
         closeConnection(conn);
+
     }
 }
