@@ -12,23 +12,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class Main {
-    public static Connection createDbConnection(Properties props) throws IOException, ClassNotFoundException, SQLException {
-        // 1. Load DB Driver
-        try {
-            Class.forName(props.getProperty("driver"));
-        } catch (ClassNotFoundException ex) {
-            throw ex;
-        }
-        // 2. Create DB Connection and 3.Create Statement
-        return DriverManager.getConnection(props.getProperty("url"), props);
-    }
+import static course.academy.util.JdbcUtils.closeConnection;
+import static course.academy.util.JdbcUtils.createDbConnection;
 
-    public static  void closeConnection(Connection connection) throws SQLException {
-        if(connection != null && !connection.isClosed()){
-            connection.close();
-        }
-    }
+public class Main {
+
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
         // Read app properties from file
         Properties props = new Properties();
