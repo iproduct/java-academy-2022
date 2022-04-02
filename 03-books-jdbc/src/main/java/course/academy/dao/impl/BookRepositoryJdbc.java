@@ -10,16 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 @Slf4j
 public class BookRepositoryJdbc implements BookRepository {
     public static final String SELECT_ALL_BOOKS =
             "select * from `book`;";
+    public static final String INSERT_NEW_BOOK =
+            "insert into `book` (`title`, `authors`, `year`, `publisher`, `price`, `description`) values (?, ?, ?, ?, ?, ?);";
     private Connection connection;
 
     public BookRepositoryJdbc(Connection connection) {
@@ -64,7 +63,43 @@ public class BookRepositoryJdbc implements BookRepository {
 
     @Override
     public Book create(Book entity) {
-        return null;
+        try(var stmt = connection.prepareStatement(INSERT_NEW_BOOK, Statement.RETURN_GENERATED_KEYS)) {
+            // 4. Set params and execute SQL query
+            stmt.setString(1, entity.getTitle());
+            stmt.setString(2, entity.getAuthors());
+            stmt.setInt(3, entity.getYear());
+            stmt.setString(4, entity.getPublisher());
+            stmt.setDouble(5, entity.getPrice());
+            stmt.setString(6, entity.getDescription());
+            // 5. Execute insert statement
+            connection.setAutoCommit(false);
+            var affectedRows = stmt.executeUpdate();
+            // more updates here ...
+            connection.commit();
+            connection.setAutoCommit(true);
+
+            // 6. Check results and Get generated primary ke
+            if (affectedRows == 0) {
+                throw new EntityPersistenceException("Creating user failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                    return entity;
+                }
+                else {
+                    throw new EntityPersistenceException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                throw new EntityPersistenceException("Error rolling back SQL query: " + SELECT_ALL_BOOKS, ex);
+            }
+            log.error("Error creating connection to DB", ex);
+            throw new EntityPersistenceException("Error executing SQL query: " + SELECT_ALL_BOOKS, ex);
+        }
     }
 
     @Override

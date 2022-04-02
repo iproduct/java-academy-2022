@@ -96,14 +96,6 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
     }
 
     public String getDescription() {
-        if(description == null){
-            description = "id=" + id +
-                    ", title='" + title + '\'' +
-                    ", author='" + authors + '\'' +
-                    ", publishingDate=" + year +
-                    ", publisher='" + publisher + '\'' +
-                    ", price=" + price;
-        }
         return description;
     }
 
