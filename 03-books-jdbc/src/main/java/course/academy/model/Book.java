@@ -37,6 +37,16 @@ public class Book implements Comparable<Book>, Identifiable<Long>, Serializable 
         this.description = description;
     }
 
+    public Book(Long id, String title, String authors, int year, String publisher, double price, String description) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.year = year;
+        this.publisher = publisher;
+        this.price = price;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
