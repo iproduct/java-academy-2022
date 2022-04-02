@@ -14,6 +14,8 @@ import java.util.Properties;
 
 @Slf4j
 public class JdbcSimpleDemo {
+    public static final String SELECT_BOOK_PRICE_LOWER_THAN =
+            "select * from `book` where price <= ? ;";
     public void run() throws IOException, ClassNotFoundException, SQLException {
         Properties props = new Properties();
         String dbConfigPath = JdbcSimpleDemo.class.getClassLoader()
@@ -32,10 +34,15 @@ public class JdbcSimpleDemo {
 
         // 2. Create DB Connection and 3.Create Statement
         try (var con = DriverManager.getConnection(props.getProperty("url"), props);
-             var stmt = con.createStatement()) {
+             var stmt = con.prepareStatement(SELECT_BOOK_PRICE_LOWER_THAN)) {
             log.info("DB Connection established successfully to schema: {}", con.getCatalog());
-            var rs = stmt.executeQuery("select * from `book`;");
-
+            // 4. Set params and execute SQL query
+            stmt.setDouble(1, 40.0);
+            var rs = stmt.executeQuery();
+            // 5. Transform ResultSet to Book
+            for(var book : toBooks(rs)){
+                System.out.println(book);
+            }
         } catch (SQLException ex) {
             log.error("Error creating connection to DB", ex);
             throw ex;

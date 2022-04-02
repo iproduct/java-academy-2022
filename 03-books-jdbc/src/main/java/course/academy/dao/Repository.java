@@ -2,6 +2,7 @@ package course.academy.dao;
 
 import course.academy.exception.NonexistingEntityException;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +16,7 @@ public interface Repository<K, V extends Identifiable<K>> {
      * Find all users in repository
      * @return array of all users
      */
-    Collection<V> findAll();
+    Collection<V> findAll() throws SQLException;
 
     List<V> findAllSorted(Comparator<V> comparator);
 
