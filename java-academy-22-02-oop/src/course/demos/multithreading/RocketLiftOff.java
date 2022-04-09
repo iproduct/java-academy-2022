@@ -17,7 +17,7 @@ public class RocketLiftOff implements Runnable {
                 System.out.printf("Countdown interrupted for Rocket %d%n", n);
             }
         }
-        System.out.printf("Rocket %d: LiftOff!!!", n);
+        System.out.printf("Rocket %d: LiftOff!!!%n", n);
     }
 }
 
