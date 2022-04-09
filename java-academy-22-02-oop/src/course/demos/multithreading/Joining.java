@@ -4,7 +4,7 @@ class Sleeper extends Thread {
   private int duration;
   public Sleeper(String name, int duration) {
     super(name);
-    duration = duration;
+    this.duration = duration;
     start();
   }
   public void run() {
@@ -32,15 +32,15 @@ class Joiner extends Thread {
     } catch(InterruptedException e) {
      System.out.println("Thread was interrupted");
     }
-    System.out.println("Joining with:" + getName());
+    System.out.println("Joining with: " + getName());
   }
 }
 
 public class Joining {
   public static void main(String[] args) {
     Sleeper
-      s1 = new Sleeper("Sleeper1", 1500),
-      s2 = new Sleeper("Sleeper2", 1500);
+      s1 = new Sleeper("Sleeper1", 2000),
+      s2 = new Sleeper("Sleeper2", 5000);
     Joiner
       j1 = new Joiner("Joiner1", s1),
       j2 = new Joiner("Joiner2", s2);
