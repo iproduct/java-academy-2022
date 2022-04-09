@@ -1,6 +1,7 @@
-package course.academy.javaacademy2205servlets;
+package course.academy.hello;
 
 import java.io.*;
+import java.util.Date;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -19,6 +20,7 @@ public class HelloServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
+        out.println("<h2>" + new Date() + "</h2>");
         out.println("</body></html>");
     }
 
